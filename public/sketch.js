@@ -22,6 +22,8 @@ var debugString = "nothing here";
 
 
 function setup() {
+  frameRate(8);
+
   ww = windowWidth;
   wh = windowHeight;
 
@@ -121,8 +123,6 @@ function updatePoses() {
       x2 = constrain(x2, 0, video.width-1);
       y1 = constrain(y1, 0, video.height-1);
       y2 = constrain(y2, 0, video.height-1);
-
-      cropImage(video, x1, y1, x2-x1, y2-y1);  
     }
   }
 }
@@ -180,21 +180,23 @@ function draw() {
   }
 }
 
-function mousePressed() {
-  debugString = "clickme";
-  var success = makeObfuscatedImage();    
-  if (success){
-    sendWS();
+function runCrop() {
+  var success1 = cropImage(video, x1, y1, x2-x1, y2-y1);  
+  if (success1) {
+    var success2 = makeObfuscatedImage();    
+    if (success2){
+      sendWS();
+    }
   }
 }
 
+function mousePressed() {
+  runCrop();
+}
+
 function keyPressed() {
-  console.log("keypress");
   if (key==' '){
-    var success = makeObfuscatedImage();
-    if (success){
-      sendWS();
-    }
+    runCrop();
   }
 }
 
