@@ -148,6 +148,13 @@ function draw() {
   text(msg, vw/2, vh-24);
   pop();
 
+  if (imgCanvas) {
+    push();
+    translate(0, vh + 10);
+    image(imgCanvas, 0, 0);
+    pop();
+  }
+
   if (imgCanvas && frameCount % 200 == 0){
     makeObfuscatedImage();    
     sendWS();
