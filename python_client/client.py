@@ -11,7 +11,7 @@ import numpy as np
 
 p_idx = 1
 
-h, w = 300, 300
+h, w = 240, 240
 
 #img_avg = np.zeros((h, w, 3)).astype(np.uint64)
 #img_avg_noisy = np.zeros((h, w, 3)).astype(np.uint64)
@@ -65,5 +65,5 @@ def initiate(hostpath):
 
 
 if __name__ == "__main__":
-    #initiate("ws://mlsalon.herokuapp.com")
-    initiate("ws://localhost:5000")
+    initiate("ws://mlsalon.herokuapp.com")
+    #initiate("ws://localhost:5000")

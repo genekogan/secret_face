@@ -11,13 +11,25 @@ var croppedImage;
 var imgCanvas;
 var videoCanvas;
 var headInside, eyesStraight;
+var ww, wh, vw, vh;
+
+let IW = 240;
+let IH = 240;
+let cw = 0.4;
+let ch = 0.6;
 
 
 function setup() {
-  mainCanvas = createCanvas(720, 800);
-  imgCanvas = createGraphics(300, 300);
+  ww = windowWidth;
+  wh = windowHeight;
+  vw = ww;
+  vh = int(vw / (640/480));
+
+  mainCanvas = createCanvas(ww, wh);
+  imgCanvas = createGraphics(IW, IH);
   videoCanvas = createGraphics(640, 480);
   video = createCapture(VIDEO);
+  console.log("SIZE IS ", vw, vh);
   video.size(640, 480);
 
   imgCanvas.pixelDensity(1);
@@ -54,9 +66,9 @@ function cropImage(imgSrc, x, y, w, h) {
 }
 
 function makeObfuscatedImage() {
-  croppedImage.resize(300, 300);
+  croppedImage.resize(IW, IH);
   croppedImage.loadPixels();
-  for (let i = 0; i < 300 * 300 * 4; i += 4) {
+  for (let i = 0; i < IW * IH * 4; i += 4) {
     croppedImage.pixels[i    ] = croppedImage.pixels[i    ] + 100 * (-1 + 2 * random());
     croppedImage.pixels[i + 1] = croppedImage.pixels[i + 1] + 100 * (-1 + 2 * random());
     croppedImage.pixels[i + 2] = croppedImage.pixels[i + 2] + 100 * (-1 + 2 * random());
@@ -82,10 +94,10 @@ function updatePoses() {
     let eyeDistY = abs(eyeL.y - eyeR.y);
 
     headInside = (
-      eye1x > 0.28 * video.width && eye1x < 0.72 * video.width && 
-      eye2x > 0.28 * video.width && eye2x < 0.72 * video.width && 
-      eyeL.y > 0.22 * video.height && eyeL.y < 0.78 * video.height &&
-      eyeL.y > 0.22 * video.height && eyeL.y < 0.78 * video.height
+      eye1x > (0.5 - cw/2 + 0.02) * video.width && eye1x < (0.5 + cw/2 - 0.02) * video.width && 
+      eye2x > (0.5 - cw/2 + 0.02) * video.width && eye2x < (0.5 + cw/2 - 0.02) * video.width && 
+      eyeL.y > (0.5 - cw/2 + 0.06) * video.height && eyeL.y < (0.5 + ch/2 - 0.06) * video.height &&
+      eyeL.y > (0.5 - cw/2 + 0.06) * video.height && eyeL.y < (0.5 + ch/2 - 0.06) * video.height
     );
 
     eyesStraight = eyeDistY < 10;
@@ -103,16 +115,14 @@ function updatePoses() {
   }
 }
 
-
 function draw() {
-
   background(0);
 
   push();
-  translate(40, 40);
+  translate(0, 0);
   fill(255);
   noStroke();
-  image(video, 0, 0);
+  image(video, 0, 0, vw, vh);
   noFill();
   strokeWeight(4);
   if (headInside) { 
@@ -120,7 +130,7 @@ function draw() {
   } else {
     stroke(255, 0, 0);
   }
-  ellipse(video.width/2, video.height/2, video.width * 0.5, video.width * 0.6);
+  ellipse(vw/2, vh/2, vw * cw, vh * ch);
 
   var msg = "Perfect!";
   if (!headInside && !eyesStraight) {
@@ -135,17 +145,13 @@ function draw() {
   noStroke();
   textAlign(CENTER);
   textSize(22);
-  text(msg, video.width/2, video.height-25);
+  text(msg, vw/2, vh-24);
   pop();
 
   if (imgCanvas && frameCount % 200 == 0){
-    //image(imgCanvas, 400, 0)
-    makeObfuscatedImage();
-    
+    makeObfuscatedImage();    
     sendWS();
   }
-
-
 }
 
 function keyPressed() {
