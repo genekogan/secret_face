@@ -15,22 +15,21 @@ var ww, wh, vw, vh;
 
 let IW = 240;
 let IH = 240;
-let cw = 0.4;
-let ch = 0.6;
+let cw = 0.58;
+let ch = 0.55;
+
+var debugString = "nothing here";
 
 
 function setup() {
   ww = windowWidth;
   wh = windowHeight;
-  
 
   mainCanvas = createCanvas(ww, wh);
   imgCanvas = createGraphics(IW, IH);
 //  videoCanvas = createGraphics(640, 480);
   video = createCapture(VIDEO);
   //video.size(640, 480);
-
-  
 
   imgCanvas.pixelDensity(1);
   headInside = false;
@@ -59,6 +58,7 @@ function setupWS() {
 }
 
 function cropImage(imgSrc, x, y, w, h) {
+  debugString = "crop "+str(floor(x))+", "+str(floor(y))+", "+str(floor(w))+", "+str(floor(h))+" from: "+str(imgSrc.width)+", "+str(imgSrc.height)+".";
   videoCanvas = createGraphics(video.width, video.height);
   videoCanvas.image(imgSrc, 0, 0);
   croppedImage = createImage(w, h);
@@ -111,18 +111,25 @@ function updatePoses() {
       let eyeDist = eye2x - eye1x;
       let distMult = 1.5;
       let distMultY = (1.0 + distMult * 2) / 2.0;
+      
       let x1 = eye1x - distMult * eyeDist;
       let x2 = eye2x + distMult * eyeDist;
       let y1 = eyeM - distMultY * eyeDist;
       let y2 = eyeM + distMultY * eyeDist;
-      var img2 = cropImage(video, x1, y1, x2-x1, y2-y1);  
+
+      x1 = constrain(x1, 0, video.width-1);
+      x2 = constrain(x2, 0, video.width-1);
+      y1 = constrain(y1, 0, video.height-1);
+      y2 = constrain(y2, 0, video.height-1);
+
+      cropImage(video, x1, y1, x2-x1, y2-y1);  
     }
   }
 }
 
 function draw() {
 
-  vw = ww;
+  vw = min(640, ww);
   vh = int(vw / (video.width/video.height));
 
   background(0);
@@ -154,6 +161,7 @@ function draw() {
   textAlign(CENTER);
   textSize(22);
   text(msg, vw/2, vh-24);
+  text(debugString, vw/2, vh);
   pop();
 
   if (imgCanvas) {
