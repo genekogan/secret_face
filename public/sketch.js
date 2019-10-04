@@ -18,6 +18,8 @@ let IW = 240;
 let IH = 240;
 let cw = 0.58;
 let ch = 0.55;
+var margin = 220;
+var frameInterval = 10;
 
 var debugString = "nothing here";
 
@@ -84,9 +86,9 @@ function makeObfuscatedImage() {
   croppedImage.resize(IW, IH);
   croppedImage.loadPixels();
   for (let i = 0; i < IW * IH * 4; i += 4) {
-    croppedImage.pixels[i    ] = croppedImage.pixels[i    ] + 100 * (-1 + 2 * random());
-    croppedImage.pixels[i + 1] = croppedImage.pixels[i + 1] + 100 * (-1 + 2 * random());
-    croppedImage.pixels[i + 2] = croppedImage.pixels[i + 2] + 100 * (-1 + 2 * random());
+    croppedImage.pixels[i    ] = croppedImage.pixels[i    ] + margin * (-1 + 2 * random());
+    croppedImage.pixels[i + 1] = croppedImage.pixels[i + 1] + margin * (-1 + 2 * random());
+    croppedImage.pixels[i + 2] = croppedImage.pixels[i + 2] + margin * (-1 + 2 * random());
   }
   croppedImage.updatePixels();
   imgCanvas.image(croppedImage, 0, 0);
@@ -180,7 +182,7 @@ function draw() {
     pop();
   }
 
-  if (imgCanvas && frameCount % 20 == 0){
+  if (imgCanvas && frameCount % frameInterval == 0){
     runCrop();
   }
 }

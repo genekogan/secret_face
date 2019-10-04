@@ -65,5 +65,5 @@ def initiate(hostpath):
 
 
 if __name__ == "__main__":
-    #initiate("ws://mlsalon.herokuapp.com")
-    initiate("ws://localhost:5000")
+    initiate("ws://mlsalon.herokuapp.com")
+    #initiate("ws://localhost:5000")
