@@ -7,46 +7,49 @@ import base64
 import re
 import json
 
-#data:image/png;base64
+
+p_idx = 1
+
+h, w = 300, 300
+
+#img_avg = np.zeros((h, w, 3)).astype(np.uint64)
+#img_avg_noisy = np.zeros((h, w, 3)).astype(np.uint64)
 
 
 
+    # if img.width != w or img.height != h:
+    #     img = img.resize((h, w), Image.BICUBIC)
+    # img = np.array(img).astype(np.uint64)
+    # img_noisy = img + (-margin + 2 * margin * np.random.rand(h, w, 3)).astype(np.uint64)
+    # img_avg += img
+    # img_combined = np.concatenate([img, img_noisy], axis=1)
+    # if p < 10:
+    #     Image.fromarray(img_combined.astype(np.uint8)).save('img_%03d.jpg'%p)
+    # img_avg_noisy += img_noisy
 
-#im = Image.open(BytesIO(base64.b64decode(data)))
-#image_data = re.sub('^data:image/.+;base64,', '', data['img']).decode('base64')
-             
-                      
-#image = Image.open(cStringIO.StringIO(image_data))
+
+
 
 
 def on_message(ws, message):
-    print("heello i received message!")
-    #print (message)
     message = json.loads(message)
     if 'imageData' in message:
         imageData = re.sub('^data:image/.+;base64,', '', message['imageData'])
-        print("def")
         myImg = Image.open(BytesIO(base64.b64decode(imageData)))
-        print("yes size")
-        print(myImg.width, myImg.height)
-        myImg.save('mysockimg.png');
+        myImg.save('images/obfuscated_image%05d.png'%p_idx)
+        myImg = np.array
+        p_idx += 1
 
 def on_error(ws, error):
     print(error)
 
 def on_close(ws):
     print( "### closed ###")
-    # Attemp to reconnect with 2 seconds interval
-    #time.sleep(2)
-    #initiate("ws://localhost:5000")
 
 def on_open(ws):
     print("### Initiating new websocket connection ###")
     def run(*args):
-        ws.send('{"aggregatorID": 91 }')
-        time.sleep(1)
-        #ws.close()
-        print ("thread terminating...")
+        ws.send('{"aggregatorID": 1 }')
     thread.start_new_thread(run, ())
 
 def initiate(hostpath):
@@ -56,8 +59,8 @@ def initiate(hostpath):
         on_error = on_error,
         on_close = on_close)
     ws.on_open = on_open
-
     ws.run_forever()
+
 
 if __name__ == "__main__":
     #initiate("ws://mlsalon.herokuapp.com")
