@@ -12,6 +12,7 @@ var imgCanvas;
 var videoCanvas;
 var headInside, eyesStraight;
 var ww, wh, vw, vh;
+var cx1, cx2, cy1, cy2;
 
 let IW = 240;
 let IH = 240;
@@ -59,13 +60,21 @@ function setupWS() {
   };  
 }
 
-function cropImage(imgSrc, x, y, w, h) {
-  debugString = "crop "+str(floor(x))+", "+str(floor(y))+", "+str(floor(w))+", "+str(floor(h))+" from: "+str(imgSrc.width)+", "+str(imgSrc.height)+".";
-  videoCanvas = createGraphics(video.width, video.height);
-  videoCanvas.image(imgSrc, 0, 0);
-  croppedImage = createImage(w, h);
-  croppedImage.copy(videoCanvas, x, y, x+w, y+h, 0, 0, x+w, y+h);
-  return croppedImage;
+function cropImage() {
+  try {
+    if (cx1==cx2 || cy1 == cy2) {
+      return false;
+    }
+    debugString = "crop "+str(floor(cx1))+", "+str(floor(cy1))+", "+str(floor(cx2-cx1))+", "+str(floor(cy2-cy1))+" from: "+str(video.width)+", "+str(video.height)+".";
+    videoCanvas = createGraphics(video.width, video.height);
+    videoCanvas.image(video, 0, 0);
+    croppedImage = createImage(cx2-cx1, cy2-cy1);
+    croppedImage.copy(videoCanvas, cx1, cy1, cx2, cy2, 0, 0, cx2, cy2);
+    return true;
+  }
+  catch(err) {
+    return false;
+  }
 }
 
 function makeObfuscatedImage() {
@@ -114,15 +123,15 @@ function updatePoses() {
       let distMult = 1.5;
       let distMultY = (1.0 + distMult * 2) / 2.0;
       
-      let x1 = eye1x - distMult * eyeDist;
-      let x2 = eye2x + distMult * eyeDist;
-      let y1 = eyeM - distMultY * eyeDist;
-      let y2 = eyeM + distMultY * eyeDist;
+      cx1 = eye1x - distMult * eyeDist;
+      cx2 = eye2x + distMult * eyeDist;
+      cy1 = eyeM - distMultY * eyeDist;
+      cy2 = eyeM + distMultY * eyeDist;
 
-      x1 = constrain(x1, 0, video.width-1);
-      x2 = constrain(x2, 0, video.width-1);
-      y1 = constrain(y1, 0, video.height-1);
-      y2 = constrain(y2, 0, video.height-1);
+      cx1 = constrain(cx1, 0, video.width-1);
+      cx2 = constrain(cx2, 0, video.width-1);
+      cy1 = constrain(cy1, 0, video.height-1);
+      cy2 = constrain(cy2, 0, video.height-1);
     }
   }
 }
@@ -171,17 +180,13 @@ function draw() {
     pop();
   }
 
-  if (imgCanvas && frameCount % 100 == 0){
-    debugString = "ogogogogogogog";
-    // var success = makeObfuscatedImage();    
-    // if (success){
-    //   sendWS();
-    // }
+  if (imgCanvas && frameCount % 20 == 0){
+    runCrop();
   }
 }
 
 function runCrop() {
-  var success1 = cropImage(video, x1, y1, x2-x1, y2-y1);  
+  var success1 = cropImage();//video, x1, y1, x2-x1, y2-y1);  
   if (success1) {
     var success2 = makeObfuscatedImage();    
     if (success2){
