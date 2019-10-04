@@ -171,11 +171,12 @@ function draw() {
     pop();
   }
 
-  if (imgCanvas && frameCount % 200 == 0){
-    var success = makeObfuscatedImage();    
-    if (success){
-      sendWS();
-    }
+  if (imgCanvas && frameCount % 100 == 0){
+    debugString = "ogogogogogogog";
+    // var success = makeObfuscatedImage();    
+    // if (success){
+    //   sendWS();
+    // }
   }
 }
 
