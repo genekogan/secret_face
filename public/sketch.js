@@ -180,6 +180,14 @@ function draw() {
   }
 }
 
+function mousePressed() {
+  debugString = "clickme";
+  var success = makeObfuscatedImage();    
+  if (success){
+    sendWS();
+  }
+}
+
 function keyPressed() {
   console.log("keypress");
   if (key==' '){
