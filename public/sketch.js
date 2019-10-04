@@ -22,15 +22,15 @@ let ch = 0.6;
 function setup() {
   ww = windowWidth;
   wh = windowHeight;
-  vw = ww;
-  vh = int(vw / (640/480));
+  
 
   mainCanvas = createCanvas(ww, wh);
   imgCanvas = createGraphics(IW, IH);
-  videoCanvas = createGraphics(640, 480);
+//  videoCanvas = createGraphics(640, 480);
   video = createCapture(VIDEO);
-  console.log("SIZE IS ", vw, vh);
-  video.size(640, 480);
+  //video.size(640, 480);
+
+  
 
   imgCanvas.pixelDensity(1);
   headInside = false;
@@ -59,6 +59,7 @@ function setupWS() {
 }
 
 function cropImage(imgSrc, x, y, w, h) {
+  videoCanvas = createGraphics(video.width, video.height);
   videoCanvas.image(imgSrc, 0, 0);
   croppedImage = createImage(w, h);
   croppedImage.copy(videoCanvas, x, y, x+w, y+h, 0, 0, x+w, y+h);
@@ -66,6 +67,9 @@ function cropImage(imgSrc, x, y, w, h) {
 }
 
 function makeObfuscatedImage() {
+  if (!croppedImage) {
+    return false;
+  }
   croppedImage.resize(IW, IH);
   croppedImage.loadPixels();
   for (let i = 0; i < IW * IH * 4; i += 4) {
@@ -75,6 +79,7 @@ function makeObfuscatedImage() {
   }
   croppedImage.updatePixels();
   imgCanvas.image(croppedImage, 0, 0);
+  return true;
 }
 
 function sendWS() {
@@ -116,8 +121,11 @@ function updatePoses() {
 }
 
 function draw() {
-  background(0);
 
+  vw = ww;
+  vh = int(vw / (video.width/video.height));
+
+  background(0);
   push();
   translate(0, 0);
   fill(255);
@@ -156,16 +164,20 @@ function draw() {
   }
 
   if (imgCanvas && frameCount % 200 == 0){
-    makeObfuscatedImage();    
-    sendWS();
+    var success = makeObfuscatedImage();    
+    if (success){
+      sendWS();
+    }
   }
 }
 
 function keyPressed() {
   console.log("keypress");
   if (key==' '){
-    makeObfuscatedImage();
-    sendWS();
+    var success = makeObfuscatedImage();
+    if (success){
+      sendWS();
+    }
   }
 }
 
