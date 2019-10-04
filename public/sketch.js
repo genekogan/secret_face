@@ -138,8 +138,11 @@ function draw() {
   text(msg, video.width/2, video.height-25);
   pop();
 
-  if (imgCanvas){
+  if (imgCanvas && frameCount % 200 == 0){
     //image(imgCanvas, 400, 0)
+    makeObfuscatedImage();
+    
+    sendWS();
   }
 
 

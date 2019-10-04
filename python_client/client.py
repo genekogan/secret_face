@@ -6,6 +6,7 @@ from io import BytesIO
 import base64
 import re
 import json
+import numpy as np
 
 
 p_idx = 1
@@ -32,6 +33,7 @@ h, w = 300, 300
 
 
 def on_message(ws, message):
+    global p_idx
     message = json.loads(message)
     if 'imageData' in message:
         imageData = re.sub('^data:image/.+;base64,', '', message['imageData'])
