@@ -7,30 +7,10 @@ import base64
 import re
 import json
 import numpy as np
+import glob
 
-
-p_idx = 1
-
+p_idx = len(glob.glob('images/obfuscated_image*'))+1
 h, w = 240, 240
-
-#img_avg = np.zeros((h, w, 3)).astype(np.uint64)
-#img_avg_noisy = np.zeros((h, w, 3)).astype(np.uint64)
-
-
-
-    # if img.width != w or img.height != h:
-    #     img = img.resize((h, w), Image.BICUBIC)
-    # img = np.array(img).astype(np.uint64)
-    # img_noisy = img + (-margin + 2 * margin * np.random.rand(h, w, 3)).astype(np.uint64)
-    # img_avg += img
-    # img_combined = np.concatenate([img, img_noisy], axis=1)
-    # if p < 10:
-    #     Image.fromarray(img_combined.astype(np.uint8)).save('img_%03d.jpg'%p)
-    # img_avg_noisy += img_noisy
-
-
-
-
 
 def on_message(ws, message):
     global p_idx

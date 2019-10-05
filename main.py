@@ -4,9 +4,9 @@ import glob
 from tqdm import tqdm
 from random import random, shuffle
 
-dir = '/Users/gene/Code/Python/private_ML/python_client/images/'
-#dir = '/Users/gene/Code/Python/private_ML/lfw/lfw_funneled'
-N = 50
+dir = 'images/'
+#dir = 'lfw/lfw_funneled'
+N = 1e8
 w, h = 240, 240
 margin = 0
 
@@ -18,6 +18,8 @@ image_paths = image_paths[0:min(N, len(image_paths))]
 img_avg = np.zeros((h, w, 3)).astype(np.uint64)
 img_avg_noisy = np.zeros((h, w, 3)).astype(np.uint64)
 
+print("there are %d images"%len(image_paths))
+N = min(N, len(image_paths))
 for p, path in tqdm(enumerate(image_paths)):
     img = Image.open(path)
     if img.width != w or img.height != h:
