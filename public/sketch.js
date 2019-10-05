@@ -18,8 +18,8 @@ let IW = 240;
 let IH = 240;
 let cw = 0.58;
 let ch = 0.55;
-var margin = 220;
-var frameInterval = 10;
+var margin = 250;
+var frameInterval = 8;
 
 var debugString = "nothing here";
 
