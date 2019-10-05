@@ -18,7 +18,7 @@ let IW = 240;
 let IH = 240;
 let cw = 0.58;
 let ch = 0.55;
-var margin = 250;
+var margin = 500;
 var frameInterval = 8;
 
 var debugString = "nothing here";
@@ -172,7 +172,7 @@ function draw() {
   textAlign(CENTER);
   textSize(22);
   text(msg, vw/2, vh-24);
-  text(debugString, vw/2, vh);
+  //text(debugString, vw/2, vh);
   pop();
 
   if (imgCanvas) {
@@ -208,7 +208,7 @@ function keyPressed() {
 }
 
 function modelReady() {
-  select('#status').html('Model Loaded');
+  select('#status').html('');
 }
 
 function onPose(results) {
