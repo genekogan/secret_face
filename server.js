@@ -37,7 +37,6 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (wsMsg) => {
     try {
-      console.log("RECEIVED A MSG from ", ws.id);
       var msgJSON = JSON.parse(wsMsg);
 
       if ("aggregatorID" in msgJSON) {
@@ -51,45 +50,12 @@ wss.on('connection', (ws) => {
         };
 
         if (aggregatorID != -1) {
-          console.log("LETS SEND TO AGGREGATOR")
           let dest = idMap[aggregatorID];
           if (dest) {
             dest.send(JSON.stringify(newMsg));
           }
         }
-
-        
-
       }
-
-      /*
-      var msgJSON = JSON.parse(wsMsg);
-      store.users[msgJSON.id] = { 
-        deviceData: msgJSON.deviceData, 
-        name: msgJSON.id, 
-        imageData: msgJSON.imageData 
-      };
-      */
-
-      //var imageData = msgJSON.imageData;
-
-      console.log("received " );
-
-      wss.clients.forEach((client) => {
-        //client.send(JSON.stringify({"myMessage": "hi from thee server", "other": 5}));
-        //client.send("hi from thee server");
-        //console.log(client)
-      });
-
-
-      /*
-      console.log("now send ");
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({"myMessage": "hi from thee server", "other": 5}));
-        client.send("hi from thee server");
-      });
-      */
-
 
     } catch(e) {
       console.log("Unexpected message: ");
@@ -100,17 +66,13 @@ wss.on('connection', (ws) => {
 });
 
 
+// setInterval(() => {
+//   if (Object.keys(store.users).length) {
+//     wss.clients.forEach((client) => {
+//       client.send(JSON.stringify(store));
+//     });
+//   }
 
+//   store.users = {};
 
-
-setInterval(() => {
-  
-  if (Object.keys(store.users).length) {
-    wss.clients.forEach((client) => {
-      client.send(JSON.stringify(store));
-    });
-  }
-
-  store.users = {};
-
-}, USERS_INTERVAL);
+// }, USERS_INTERVAL);

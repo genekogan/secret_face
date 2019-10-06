@@ -10,8 +10,7 @@ import numpy as np
 import glob
 
 
-#host = "ws://mlsalon.herokuapp.com"
-host = "ws://localhost:5000"  
+HOST = "ws://glacial-dusk-26636.herokuapp.com/"  
 
 
 p_idx = len(glob.glob('images/obfuscated_image*'))+1
@@ -49,4 +48,4 @@ def initiate(hostpath):
     ws.run_forever()
 
 if __name__ == "__main__":
-    initiate(host)
+    initiate(HOST)
