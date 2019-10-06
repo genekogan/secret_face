@@ -5,12 +5,10 @@ from tqdm import tqdm
 from random import random, shuffle
 
 dir = 'images/'
-#dir = 'lfw/lfw_funneled'
 N = 1e8
 w, h = 240, 240
 margin = 0
 
-#image_paths = glob.glob('%s/*/*.jpg'%dir)
 image_paths = glob.glob('%s/*.png'%dir)
 shuffle(image_paths)
 image_paths = image_paths[0:min(N, len(image_paths))]
@@ -28,12 +26,11 @@ for p, path in tqdm(enumerate(image_paths)):
     img_noisy = img + (-margin + 2 * margin * np.random.rand(h, w, 3)).astype(np.uint64)
     img_avg += img
     img_combined = np.concatenate([img, img_noisy], axis=1)
-    #if p % 500:
-    #    Image.fromarray(img_combined.astype(np.uint8)).save('lfw/img_%05d.png'%p)
     img_avg_noisy += img_noisy
 
 img_avg = img_avg / N 
 img_avg_noisy = img_avg_noisy / N 
 
 img_combined = np.concatenate([img_avg, img_avg_noisy], axis=1)
-Image.fromarray(img_combined.astype(np.uint8)).save('my2avg_%d.png'%N)
+Image.fromarray(img_combined.astype(np.uint8)).save('myAverage.png')
+print("Created the image myAveragee.png in root directory, which shows average of all the images")

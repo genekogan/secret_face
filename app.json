@@ -1,6 +1,6 @@
 {
-  "name": "Node.js WebSocket Example",
-  "description": "Part of the Using WebSockets on Heroku Tutorial",
-  "repository": "https://github.com/heroku-examples/node-websockets",
+  "name": "Secret face",
+  "description": "Privately averaging everyone's faces together without sharing actual pictures",
+  "repository": "https://github.com/genekogan/secret_face",
   "keywords": ["node", "websocket"]
 }

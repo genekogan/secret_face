@@ -9,6 +9,11 @@ import json
 import numpy as np
 import glob
 
+
+#host = "ws://mlsalon.herokuapp.com"
+host = "ws://localhost:5000"  
+
+
 p_idx = len(glob.glob('images/obfuscated_image*'))+1
 h, w = 240, 240
 
@@ -43,7 +48,5 @@ def initiate(hostpath):
     ws.on_open = on_open
     ws.run_forever()
 
-
 if __name__ == "__main__":
-    initiate("ws://mlsalon.herokuapp.com")
-    #initiate("ws://localhost:5000")
+    initiate(host)
