@@ -1,10 +1,8 @@
-# Background
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 This node/express app demonstrates the simplest way of calculating the average of a dataset while keeping all of the underlying data private. The client application opens up your camera and starts taking pictures of your face, obfuscating the image by salting random zero-centered numbers to the pixels, then sending the garbled images to the server. The server then takes the average of all the images. With a [large enough sample size](https://en.wikipedia.org/wiki/Law_of_large_numbers), the added noise cancels out (converges to zero) and you're left with approximately the average of the actual non-obfuscated data.
 
-#### Try it out
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+![example](example.jpg)
 
 # Getting Started
 
