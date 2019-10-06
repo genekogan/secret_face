@@ -29,6 +29,10 @@ This node/express app demonstrates the simplest way of calculating the average o
 
 5. Visit your app on the web and put your face in the circle... It will take pictures, obfuscate the image, and send to the server. You should see images begin to show up in the images folder of wherever you are running the python client.
 
+The app looks something like this:
+
+![app_screenshot](app_screenshot.jpg)
+
 6. Ideally you capture at least 1000 images. It works best with many clients (>20!) at same time in a room. 
 
 7. Take the average of all the collected images.
