@@ -4,13 +4,13 @@
   "engines": {
     "node": "6.2.0"
   },
-  "description": "",
+  "description": "[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)",
   "main": "index.js",
   "scripts": {
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "gene kogan",
   "license": "ISC",
   "dependencies": {
     "bufferutil": "1.2.1",
@@ -18,5 +18,13 @@
     "utf-8-validate": "1.2.1",
     "uuid": "^3.3.2",
     "ws": "3.3.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genekogan/secret_face.git"
+  },
+  "bugs": {
+    "url": "https://github.com/genekogan/secret_face/issues"
+  },
+  "homepage": "https://github.com/genekogan/secret_face#readme"
 }
