@@ -14,6 +14,12 @@ This node/express app demonstrates the simplest way of calculating the average o
   npm install
   heroku create
   ```
+
+  Then whatever your app name is from Heroku, e.g. "cryptic-plains-03067"
+  
+  ```
+  heroku buildpacks:set https://github.com/heroku/heroku-buildpack-nodejs#v160 -a cryptic-plains-03067
+  ```
   
   Also install python requirements.
   
@@ -23,7 +29,7 @@ This node/express app demonstrates the simplest way of calculating the average o
 
    `git push heroku master`
 
-3. Start the python client which will collect the noisy images. Make sure to modify the `HOST` variable to your actual heroku url (e.g. `https://glacial-dusk-26636.herokuapp.com/` for heroku).
+3. Start the python client which will collect the noisy images. Make sure to modify the `HOST` variable to your actual heroku url (e.g. `https://cryptic-plains-03067.herokuapp.com/` for heroku).
 
   `python collector_client.py`
 
