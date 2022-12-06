@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bufferutil": "1.2.1",
-    "express": "4.13.4",
+    "express": "4.17.3",
     "utf-8-validate": "1.2.1",
     "uuid": "^3.3.2",
     "ws": "3.3.1"
